@@ -1,0 +1,7 @@
+mygento_controllers:
+    resource: ../../src/Mygento/Infrastructure/Controller/Http/
+    type: annotation
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

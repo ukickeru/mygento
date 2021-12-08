@@ -1,0 +1,61 @@
+{% extends '@Mygento/base.html.twig' %}
+
+{% block subtitle %}. Главная{% endblock %}
+
+{% block page_header_text %}Список новостей{% endblock %}
+
+{% block body %}
+<div class="wrapper py-2">
+    <div class="col-6 offset-3">
+    {% for news in newsArray %}
+        <div class="news row pb-4" id="news-{{ news.id }}">
+            <div class="title">
+                <h4>{{ news.title }}</h4>
+            </div>
+            <div class="body">
+                <p>{{ news.content }}</p>
+            </div>
+            <div class="footer d-flex justify-content-between align-items-start">
+                <div class="likes-count">
+                    <p>Всего лайков: {{ news.likedUsers|length }}</p>
+                    {% if ( news.likedUsers is not empty ) %}
+                        <p class="mb-0">
+                            <a class="link" data-bs-toggle="collapse" href="#likes-{{ loop.index }}" role="button" aria-expanded="false" aria-controls="likes-{{ loop.index }}">
+                                Развернуть/свернуть
+                            </a>
+                        </p>
+                        <span class="collapse" id="likes-{{ loop.index }}">{{ news.likedUsers|join(', ') }}</span>
+                    {% else %}
+                        -
+                    {% endif %}
+                </div>
+                <div class="actions">
+                    <a class="mx-2" href="#">
+                        <form action="{{ path('toggle_user_like', {'newsId': news.id}) }}" method="post">
+                            <button type="submit" class="btn btn-link" title="Нравится">
+                                <i class="fa fa-heart pe-2"></i>Нравится
+                            </button>
+                        </form>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{#
+<div class="wrapper py-2">
+    <div class="d-flex justify-content-center align-items-center">
+        <a class="mx-4" href="{{ path('user_index') }}">
+            <button class="btn btn-link"><i class="fa fa-user pe-2"></i>Пользователи</button>
+        </a>
+        <a class="mx-4" href="{{ path('news_index') }}">
+            <button class="btn btn-link"><i class="fa fa-newspaper pe-2"></i>Новости</button>
+        </a>
+        <a class="mx-4" href="{{ path('app_logout') }}">
+            <button class="btn btn-link"><i class="fa fa-sign-out-alt pe-2"></i>Выйти</button>
+        </a>
+    </div>
+</div>
+#}
+{% endblock %}

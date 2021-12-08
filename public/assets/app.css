@@ -1,0 +1,18 @@
+/*
+ * Tables
+ */
+
+table.table tr:last-child > th,
+table.table tr:last-child > td {
+    border-bottom: none;
+}
+
+table.table > thead > tr:last-child > th,
+table.table > thead > tr:last-child > td {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.text-vertical {
+    writing-mode: tb;
+    transform: rotate(180deg);
+}

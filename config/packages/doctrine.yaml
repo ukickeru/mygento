@@ -1,0 +1,24 @@
+doctrine:
+    dbal:
+        dbname_suffix: '%env(resolve:DATABASE_SUFFIX)%'
+        url: '%env(resolve:DATABASE_URL)%'
+
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+
+            MygentoApplicationSecurity:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Mygento/Application/Security'
+                prefix: 'App\Mygento\Application\Security'
+                alias: MygentoApplicationSecurity
+
+            Mygento:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Mygento/Domain/Model'
+                prefix: 'App\Mygento\Domain\Model'
+                alias: Mygento

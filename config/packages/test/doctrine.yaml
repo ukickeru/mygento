@@ -1,0 +1,3 @@
+doctrine:
+    dbal:
+        dbname_suffix: '%env(resolve:DATABASE_SUFFIX)%'

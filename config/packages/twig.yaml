@@ -1,0 +1,11 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: [ 'custom_bootstrap_5_layout.html.twig' ]
+    globals:
+        token_storage: '@security.token_storage'
+    paths:
+        '%kernel.project_dir%/src/Mygento/Application/View/Twig/templates': Mygento
+
+when@test:
+    twig:
+        strict_variables: true

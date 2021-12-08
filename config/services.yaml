@@ -1,0 +1,90 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+            - '../src/Mygento/'
+            - '../src/Entity/'
+
+    # Domain services
+
+    App\Mygento\Domain\UseCase\UseCase:
+        alias: mygento.domain.use-case
+        public: false
+
+    mygento.domain.use-case:
+        class: 'App\Mygento\Domain\UseCase\UseCase'
+        public: true
+
+    App\Mygento\Domain\Model\User\IdentityUser\AbstractIdentityUserBuilder:
+        alias: mygento.application.security.identity-user-builder
+        public: false
+
+    # Application services
+
+    App\Mygento\Application\Security\IdentityUserBuilder:
+        alias: mygento.application.security.identity-user-builder
+        public: false
+
+    mygento.application.security.identity-user-builder:
+        class: 'App\Mygento\Application\Security\User\IdentityUserBuilder'
+        public: true
+
+    App\Mygento\Application\Security\UserAuthenticator:
+        alias: mygento.application.security.user-authenticator
+        public: false
+
+    mygento.application.security.user-authenticator:
+        class: 'App\Mygento\Application\Security\UserAuthenticator'
+        public: true
+
+    # Infrastructure services
+
+    App\Mygento\Infrastructure\Repository\Doctrine\User\IdentityUserRepository:
+        tags: ['doctrine.repository_service']
+
+    App\Mygento\Domain\UseCase\User\UserRepositoryInterface:
+        alias: mygento.repository.user
+        public: false
+
+    App\Mygento\Infrastructure\Repository\Doctrine\User\UserRepository:
+        public: false
+        tags: ['doctrine.repository_service']
+
+    mygento.repository.user:
+        class: 'App\Mygento\Infrastructure\Repository\Doctrine\User\UserRepository'
+        public: true
+
+    App\Mygento\Domain\UseCase\News\NewsRepositoryInterface:
+        alias: mygento.repository.news
+        public: false
+
+    App\Mygento\Infrastructure\Repository\Doctrine\News\NewsRepository:
+        public: false
+        tags: ['doctrine.repository_service']
+
+    mygento.repository.news:
+        class: 'App\Mygento\Infrastructure\Repository\Doctrine\News\NewsRepository'
+        public: true
+
+    App\Mygento\Infrastructure\Controller\Http\:
+        resource: '../src/Mygento/Infrastructure/Controller/Http/'
+        tags: ['controller.service_arguments']
+
+    App\Mygento\Infrastructure\Repository\Doctrine\DBManagement\DatabaseManagerInterface:
+        alias: mygento.doctrine.db-manager
+        public: false
+
+    mygento.doctrine.db-manager:
+        class: 'App\Mygento\Infrastructure\Repository\Doctrine\DBManagement\DatabaseManager'
+        public: true
+        bind:
+            $kernelProjectDir: '%kernel.project_dir%'
+            $environment: '%env(resolve:APP_ENV)%'

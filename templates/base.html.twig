@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="/favicon.png" type="image/png">
+        <title>{% block title %}Mygento{% block subtitle %}{% endblock %}{% endblock %}</title>
+        <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/assets/fontawesome/css/all.css">
+        <link rel="stylesheet" href="/assets/app.css">
+
+        {% block stylesheets_head %}
+        {% endblock %}
+
+        {% block javascripts_head %}
+        {% endblock %}
+    </head>
+    <body>
+    <div class="container-fluid px-4" id="body">
+        {% block page_header_navbar %}
+            <div class="header d-flex justify-content-between align-items-center">
+                <div class="header">
+                    {% block page_header %}
+                        <h4 class="my-3 fw-light">
+                            <span class="border-bottom">{% block page_header_text %}{% endblock %}</span>
+                        </h4>
+                    {% endblock %}
+                </div>
+                <div class="nav">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a class="mx-2" href="#">
+                            <button class="btn btn-link" title="{{ app.user.domainUserName ?? 'Anonymous user' }}">
+                                <i class="fa fa-user pe-2"></i>{{ app.user.domainUserName ?? 'Anonymous user' }}
+                            </button>
+                        </a>
+                        {#
+                        <a href="{{ path('app_index') }}">
+                            <button class="btn btn-link" title="Главная"><i class="fa fa-home"></i></button>
+                        </a>
+                        <a href="{{ path('user_index') }}">
+                            <button class="btn btn-link" title="Пользователи"><i class="fa fa-user"></i></button>
+                        </a>
+                        <a href="{{ path('news_index') }}">
+                            <button class="btn btn-link" title="Новости"><i class="fa fa-newspaper"></i></button>
+                        </a>
+                        #}
+                        <a href="{{ path('app_logout') }}">
+                            <button class="btn btn-link" title="Выйти"><i class="fa fa-sign-out-alt"></i></button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+        <div class="body-wrapper mt-2 mb-5 pb-2">
+            <div class="w-100" style="max-height: 4em;">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-{{ label }}" style="height: 1em">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            </div>
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{{ asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    {% block javascripts_footer %}
+    {% endblock %}
+    </body>
+</html>
