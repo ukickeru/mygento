@@ -9,10 +9,8 @@ use App\Mygento\Domain\Model\User\User;
 use App\Mygento\Domain\Model\User\ValueObject\Name;
 use App\Mygento\Domain\Model\User\ValueObject\UUID as UserID;
 use App\Mygento\Domain\UseCase\News\DTO\AddNewsDTO;
-use App\Mygento\Domain\UseCase\News\DTO\AddUserLikeDTO;
 use App\Mygento\Domain\UseCase\News\DTO\EditNewsDTO;
 use App\Mygento\Domain\UseCase\News\DTO\GetNewsDTO;
-use App\Mygento\Domain\UseCase\News\DTO\RemoveUserLikeDTO;
 use App\Mygento\Domain\UseCase\News\DTO\UserLikeDTO;
 use App\Mygento\Domain\UseCase\News\NewsRepositoryInterface;
 use App\Mygento\Domain\UseCase\UseCase;
@@ -98,11 +96,11 @@ final class UseCaseTest extends DoctrineRepositoryTestCase
                 $userIdThatLikeNews = $user2->id;
             }
 
-            $addUserLikeToNewsDTO = new AddUserLikeDTO();
-            $addUserLikeToNewsDTO->userId = $userIdThatLikeNews;
-            $addUserLikeToNewsDTO->newsId = $news->id;
+            $userLikeDTO = new UserLikeDTO();
+            $userLikeDTO->userId = $userIdThatLikeNews;
+            $userLikeDTO->newsId = $news->id;
 
-            $this->useCase->addUserLikeToNews($addUserLikeToNewsDTO);
+            $this->useCase->toggleUserLike($userLikeDTO);
         }
     }
 
