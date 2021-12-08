@@ -31,14 +31,9 @@ class NewsRepository extends ServiceEntityRepository implements NewsRepositoryIn
 
     public function findAllNewsWithUsersLikes(): array
     {
-        $qb = $this->_em->createQueryBuilder();
-
-        return $qb->select('n')
-            ->from(News::class, 'n')
-            ->innerJoin(User::class, 'u', Join::WITH)
-            ->groupBy('n.id.value')
-            ->getQuery()
-            ->getResult(AbstractQuery::HYDRATE_SIMPLEOBJECT);
+        return $this->_em
+            ->createQuery('SELECT n, u FROM ' . News::class . ' n LEFT JOIN n.likedUsers u')
+            ->getResult();
     }
 
     public function isNewsAlreadyLikedByUser(string $newsId, string $userId): bool

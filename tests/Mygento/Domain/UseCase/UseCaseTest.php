@@ -43,7 +43,6 @@ final class UseCaseTest extends DoctrineRepositoryTestCase
         parent::setUp();
 
         $this->useCase = $this::$kernel->getContainer()->get('mygento.domain.use-case');
-        $this->useCase = $this::$kernel->getContainer()->get('mygento.domain.use-case');
         $this->userRepository = $this->entityManager->getRepository(User::class);
         $this->newsRepository = $this->entityManager->getRepository(News::class);
     }
@@ -67,7 +66,7 @@ final class UseCaseTest extends DoctrineRepositoryTestCase
         return $news;
     }
 
-    private function createUsersAndLikedNews()
+    private function createAndSaveUsersAndLikedNews()
     {
         $faker = Factory::create();
 
@@ -194,7 +193,7 @@ final class UseCaseTest extends DoctrineRepositoryTestCase
      */
     public function testGetAllNewsWithUsersLikes()
     {
-        $this->createUsersAndLikedNews();
+        $this->createAndSaveUsersAndLikedNews();
 
         $result = $this->newsRepository->findAllNewsWithUsersLikes();
 
