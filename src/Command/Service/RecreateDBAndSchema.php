@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'service:recreate-db',
+    name: 'service:db:create',
     description: 'Recreate database for current environment',
 )]
 class RecreateDBAndSchema extends Command

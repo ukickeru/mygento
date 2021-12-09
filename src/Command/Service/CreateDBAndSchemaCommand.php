@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'service:create-db',
+    name: 'service:db:create',
     description: 'Create database for current environment',
 )]
 class CreateDBAndSchemaCommand extends Command

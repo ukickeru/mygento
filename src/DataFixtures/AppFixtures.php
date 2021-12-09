@@ -2,11 +2,8 @@
 
 namespace App\DataFixtures;
 
-use App\Mygento\Application\Security\User\IdentityUser;
-use App\Mygento\Domain\Model\User\User;
-use App\Mygento\Domain\Model\User\ValueObject\Name;
 use App\Mygento\Domain\UseCase\News\DTO\AddNewsDTO;
-use App\Mygento\Domain\UseCase\News\DTO\AddUserLikeDTO;
+use App\Mygento\Domain\UseCase\News\DTO\UserLikeDTO;
 use App\Mygento\Domain\UseCase\UseCase;
 use App\Mygento\Domain\UseCase\User\DTO\AddUserDTO;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -52,11 +49,11 @@ class AppFixtures extends Fixture
                 $userIdThatLikeNews = $user2->id;
             }
 
-            $addUserLikeToNewsDTO = new AddUserLikeDTO();
+            $addUserLikeToNewsDTO = new UserLikeDTO();
             $addUserLikeToNewsDTO->userId = $userIdThatLikeNews;
             $addUserLikeToNewsDTO->newsId = $news->id;
 
-            $this->useCase->addUserLikeToNews($addUserLikeToNewsDTO);
+            $this->useCase->toggleUserLike($addUserLikeToNewsDTO);
         }
     }
 }

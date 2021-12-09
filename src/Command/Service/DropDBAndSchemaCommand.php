@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'service:drop-db',
+    name: 'service:db:drop',
     description: 'Drop database for current environment',
 )]
 class DropDBAndSchemaCommand extends Command

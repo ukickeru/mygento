@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "127.0.0.1:80:80"
+    volumes:
+      - ./:/srv/www/api/
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: ./
+    expose:
+      - "9000"
+    volumes:
+      - ./:/srv/www/api/
+      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    links:
+      - "db"
+
+  db:
+    build:
+      context: ./docker/db
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306"
+    env_file:
+      - .env.local
+    environment:
+      MYSQL_ROOT_PASSWORD: superuserpassword
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - db-data:/var/lib/mysql:rw
+    restart: always
+
+volumes:
+  db-data:
